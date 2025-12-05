@@ -1306,7 +1306,7 @@ const App: React.FC = () => {
             </div>
             
             <div className="z-10 bg-black/40 backdrop-blur-xl p-12 rounded-3xl border border-white/10 shadow-2xl flex flex-col items-center gap-6 max-w-md w-full mx-4 animate-slide-in">
-                <h1 className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-yellow-300 to-yellow-600 mb-2 drop-shadow-sm">YANIK</h1>
+                <h1 className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-yellow-300 to-yellow-600 mb-2 drop-shadow-sm">BURN RUMMY PRO</h1>
                 <p className="text-white/60 text-sm mb-8 tracking-widest uppercase">{t.menu.subtitle}</p>
                 
                 <button 
