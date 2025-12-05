@@ -5,4 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: '/yanik-oyunu/',
+  build: {
+    outDir: 'docs',               // dist yerine docs klasörü
+  },
 })
