@@ -522,7 +522,7 @@ const App: React.FC = () => {
     e.dataTransfer.effectAllowed = "move"; 
   };
 
-  const handleDragEnter = (e: React.DragEvent, targetIndex: number) => {
+  const handleDragEnter = (_: React.DragEvent, targetIndex: number) => {
     if (draggedIndex === null || draggedIndex === targetIndex || !gameState) return;
     
     const newPlayers = [...gameState.players];
@@ -1679,7 +1679,7 @@ const App: React.FC = () => {
           <div className="pointer-events-auto flex items-start gap-4">
               <div className="bg-black/40 backdrop-blur-md p-3 rounded-xl border border-white/10 shadow-lg text-white">
                 <div className="flex items-center gap-2 mb-1">
-                    <span className="text-yellow-400 font-bold text-xl tracking-wider">YANIK</span>
+                    <span className="text-yellow-400 font-bold text-xl tracking-wider">BURN RUMMY PRO</span>
                 </div>
                 <div className="text-sm opacity-90">{gameState.message}</div>
                 <div className="flex gap-2 mt-2">

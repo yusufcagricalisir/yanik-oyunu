@@ -548,7 +548,7 @@ const extractSets = (cards: CardData[], jokerPool: CardData[]): { melds: CardDat
         rankMap.get(c.rank)!.push(c);
     });
 
-    for (const [rank, group] of rankMap.entries()) {
+    for (const [_, group] of rankMap.entries()) {
         const uniqueSuitCards = new Map<Suit, CardData>();
         group.forEach(c => {
             if (!uniqueSuitCards.has(c.suit)) uniqueSuitCards.set(c.suit, c);
