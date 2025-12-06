@@ -246,7 +246,7 @@ const App: React.FC = () => {
         const basePlayers = [
             { id: 0, name: 'You', isBot: false },
             { id: 1, name: 'Can', isBot: true },
-            { id: 2, name: 'Yağmur', isBot: true },
+            { id: 2, name: 'Joe', isBot: true },
             { id: 3, name: 'Mike', isBot: true },
         ];
         
