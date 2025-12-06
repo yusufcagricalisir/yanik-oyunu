@@ -53,6 +53,7 @@ export const translations = {
       sortSuit: "Sort by Suit",
       sortRank: "Sort by Rank",
       yourHand: "Your Hand",
+      handScore: "Hand Score",
       preparation: "Preparation",
       pairsMode: "Pairs Mode",
       seriesMode: "Series Mode",
@@ -100,7 +101,9 @@ export const translations = {
       openHandFirst: "Open your hand first!",
       pairsNoMatch: "Pairs do not match.",
       selectOneSwap: "Invalid move. Select 1 card to swap.",
-      cannotAdd: "Cannot add this card here."
+      cannotAdd: "Cannot add this card here.",
+      lastCardDiscard: "Cannot process: You must discard the last card.",
+      mustKeepDiscard: "Must keep 1 card to discard."
     },
     howToPlay: {
       title: "How to Play",
@@ -186,6 +189,7 @@ export const translations = {
       sortSuit: "Seri Sırala",
       sortRank: "Grup Sırala",
       yourHand: "Eliniz",
+      handScore: "El Puanı",
       preparation: "Hazırlık",
       pairsMode: "Çift Modu",
       seriesMode: "Seri Modu",
@@ -233,7 +237,9 @@ export const translations = {
       openHandFirst: "Önce elini açmalısın!",
       pairsNoMatch: "Çiftler eşleşmiyor.",
       selectOneSwap: "Geçersiz. Takas için 1 kart seç.",
-      cannotAdd: "Bu kart buraya eklenemez."
+      cannotAdd: "Bu kart buraya eklenemez.",
+      lastCardDiscard: "İşlenemez: Son kartı yere atmalısınız.",
+      mustKeepDiscard: "Yere atacak kart kalmalı."
     },
     howToPlay: {
       title: "Nasıl Oynanır",

@@ -244,9 +244,9 @@ const App: React.FC = () => {
     } else {
         // NEW GAME
         const basePlayers = [
-            { id: 0, name: 'User', isBot: false },
+            { id: 0, name: 'You', isBot: false },
             { id: 1, name: 'Can', isBot: true },
-            { id: 2, name: 'Ali', isBot: true },
+            { id: 2, name: 'Yağmur', isBot: true },
             { id: 3, name: 'Mike', isBot: true },
         ];
         
@@ -522,7 +522,7 @@ const App: React.FC = () => {
     e.dataTransfer.effectAllowed = "move"; 
   };
 
-  const handleDragEnter = (_: React.DragEvent, targetIndex: number) => {
+  const handleDragEnter = (e: React.DragEvent, targetIndex: number) => {
     if (draggedIndex === null || draggedIndex === targetIndex || !gameState) return;
     
     const newPlayers = [...gameState.players];
@@ -923,6 +923,12 @@ const App: React.FC = () => {
     if (!gameState || gameState.phase !== GamePhase.ACTION) return;
     if (gameState.players[0].isEliminated) return;
     
+    // NEW CHECK: Cannot process the last card. Must be discarded.
+    if (gameState.players[0].hand.length <= 1) {
+        showToast(t.toasts.lastCardDiscard);
+        return;
+    }
+
     if (!gameState.players[0].hasOpened) {
       showToast(t.toasts.openHandFirst);
       return;
@@ -1306,7 +1312,7 @@ const App: React.FC = () => {
             </div>
             
             <div className="z-10 bg-black/40 backdrop-blur-xl p-12 rounded-3xl border border-white/10 shadow-2xl flex flex-col items-center gap-6 max-w-md w-full mx-4 animate-slide-in">
-                <h1 className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-yellow-300 to-yellow-600 mb-2 drop-shadow-sm">RUMMY</h1>
+                <h1 className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-yellow-300 to-yellow-600 mb-2 drop-shadow-sm">YANIK</h1>
                 <p className="text-white/60 text-sm mb-8 tracking-widest uppercase">{t.menu.subtitle}</p>
                 
                 <button 
@@ -1669,6 +1675,20 @@ const App: React.FC = () => {
   const isMyTurn = gameState.currentPlayerIndex === 0;
   const iAmEliminated = gameState.players[0].isEliminated;
 
+  // Render logic variables
+  const currentPlayer = gameState.players[0];
+  const handSize = currentPlayer.hand.length;
+  // Rule: Cannot meld if hand size is low (Need 1 card to discard)
+  // Series Mode: Min meld is 3. If hand <= 3, cannot meld (3 melded = 0 left).
+  // Pairs Mode: Min meld is 2. If hand <= 2, cannot meld (2 melded = 0 left).
+  const isSeriesOpen = currentPlayer.hasOpened && currentPlayer.openingType === 'series';
+  const isPairsOpen = currentPlayer.hasOpened && currentPlayer.openingType === 'pairs';
+  const isMeldRestrictedByHandSize = 
+      (isSeriesOpen && handSize <= 3) || 
+      (isPairsOpen && handSize <= 2);
+
+  const currentHandScore = calculateHandScore(currentPlayer.hand);
+
   return (
     <div className="relative w-screen h-screen overflow-hidden" style={{ background: getTableBackground() }}>
       
@@ -1679,7 +1699,7 @@ const App: React.FC = () => {
           <div className="pointer-events-auto flex items-start gap-4">
               <div className="bg-black/40 backdrop-blur-md p-3 rounded-xl border border-white/10 shadow-lg text-white">
                 <div className="flex items-center gap-2 mb-1">
-                    <span className="text-yellow-400 font-bold text-xl tracking-wider">BURN RUMMY PRO</span>
+                    <span className="text-yellow-400 font-bold text-xl tracking-wider">YANIK</span>
                 </div>
                 <div className="text-sm opacity-90">{gameState.message}</div>
                 <div className="flex gap-2 mt-2">
@@ -1873,10 +1893,11 @@ const App: React.FC = () => {
                         <>
                             <button 
                                 onClick={createMeld}
-                                disabled={selectedCards.length < 2}
+                                title={isMeldRestrictedByHandSize ? t.toasts.mustKeepDiscard : ''}
+                                disabled={selectedCards.length < 2 || isMeldRestrictedByHandSize}
                                 className={`
                                     h-10 px-6 rounded-full font-bold shadow-lg flex items-center gap-2 transition-all border border-white/10
-                                    ${selectedCards.length >= 2 
+                                    ${(selectedCards.length >= 2 && !isMeldRestrictedByHandSize) 
                                         ? 'bg-blue-600 text-white hover:bg-blue-500 hover:scale-105' 
                                         : 'bg-gray-800/80 text-white/30 cursor-not-allowed'}
                                 `}
@@ -1947,6 +1968,12 @@ const App: React.FC = () => {
                  <div className="flex items-center gap-1 text-yellow-400">
                      <ChipIcon />
                      <span className="font-mono font-bold">{gameState.players[0].chips}</span>
+                 </div>
+                 <div className="flex items-center gap-2 border-l border-white/20 pl-4">
+                    <span className="text-xs text-white/70 uppercase font-bold tracking-wider">{t.game.handScore}</span>
+                    <span className={`font-mono font-bold text-lg ${currentHandScore > 25 ? 'text-red-400' : 'text-green-400'}`}>
+                        {currentHandScore}
+                    </span>
                  </div>
             </div>
           </div>
