@@ -522,7 +522,7 @@ const App: React.FC = () => {
     e.dataTransfer.effectAllowed = "move"; 
   };
 
-  const handleDragEnter = (e: React.DragEvent, targetIndex: number) => {
+  const handleDragEnter = (_: React.DragEvent, targetIndex: number) => {
     if (draggedIndex === null || draggedIndex === targetIndex || !gameState) return;
     
     const newPlayers = [...gameState.players];
